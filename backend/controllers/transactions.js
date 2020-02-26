@@ -31,12 +31,47 @@ exports.addTransactions = async (req, res, next) => {
             data: transaction
         });
     } catch (error) {
-        console.log(error)
+        if (error.name === 'ValidationError'){
+            const messages = Object.values(error.errors).map(val => val.message);
+
+            return res.status(400).json({
+                success: false,
+                errors: messages
+            });
+        }else{
+           return res.status(500).json({
+               success: false,
+               error: "Server error"
+           });
+        }
     }
 
 }
 
 // delete a existing transaction
 exports.deleteTransactions = async (req, res, next) => {
-    res.send('DELETE Transactions');
+    try {
+        // find a transaction by ID
+        const transaction = await Transaction.findById(req.params.id);
+        if (!transaction){
+            return res.status(404).json({
+                success: false,
+                error: 'No Transaction found!'
+            });
+        }
+
+        // delete a transaction
+        await transaction.remove();
+
+        return res.status(200).json({
+            success: true,
+            data: {}
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: "Server error"
+        });
+    }
 }
