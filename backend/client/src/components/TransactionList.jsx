@@ -1,11 +1,15 @@
-import React, { useContext }from 'react';
+import React, { useContext, useEffect }from 'react';
 import { GlobalContext } from '../context/GlobalState';
 import { Transaction } from './Transaction';
 import { NoPastTransaction } from './NoPastTransaction';
 
 export const TransactionList = () => {
 
-    const { transactions } = useContext(GlobalContext);
+    const { transactions, getTransactions } = useContext(GlobalContext);
+
+    useEffect(() => {
+        getTransactions();
+    }, []);
 
     let final_transaction = null;
 
