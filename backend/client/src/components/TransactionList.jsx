@@ -14,7 +14,7 @@ export const TransactionList = () => {
     let final_transaction = null;
 
     if (transactions.length !== 0){
-        final_transaction = transactions.map(transaction => (<Transaction key={transaction.id} transaction={transaction} />));
+        final_transaction = transactions.map(transaction => (<Transaction key={transaction._id} transaction={transaction} />));
     }else{
         final_transaction = <NoPastTransaction />
     }

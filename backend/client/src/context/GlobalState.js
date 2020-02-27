@@ -5,7 +5,7 @@ import axios from 'axios';
 // Initial state
 const initialState = {
   transactions: [],
-  error: null,
+  errors: null,
   loading: true
 }
 
@@ -77,11 +77,11 @@ export const GlobalProvider = ({ children }) => {
 
   return (<GlobalContext.Provider value={{
     transactions: state.transactions,
-    error: state.error,
+    errors: state.error,
     loading: state.loading,
     getTransactions,
     deleteTransaction,
-    addTransaction
+    addTransaction  
   }}>
     {children}
   </GlobalContext.Provider>);
